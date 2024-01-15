@@ -7,7 +7,8 @@ const Cliente = database.define("Cliente",{
         autoIncrement: true,
         allowNull: false,
         primaryKey: true
-    },nome:{
+    },
+    nome:{
         type: Sequelize.STRING,
         allowNull:false
     },

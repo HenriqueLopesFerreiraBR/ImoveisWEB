@@ -10,6 +10,10 @@ const Cliente = require('./src/model/Cliente')
 const Imovel = require('./src/model/Imovel')
 const Contrato = require('./src/model/Contrato')
 
+
+//Routes
+const ClienteRouter = require('./src/router/ClienteRouter')
+
 dotenv.config();
 
 const port = 3005;
@@ -28,6 +32,9 @@ app.use(bodyParser.urlencoded({ extended: false }));
 // parse application/json
 app.use(bodyParser.json());
 app.use(cors());
+
+
+app.use('/api/cliente',ClienteRouter)
 
 app.get("/", (req, res) => res.send("Hello World!"));
 app.listen(port, () => console.log(`Example app listening on port ${port}!`));

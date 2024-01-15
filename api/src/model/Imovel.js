@@ -29,4 +29,6 @@ const Imovel = Database.define(
     { timestamps: true }
 );
 
+Imovel.sync({force:false})
+
 module.exports = Imovel;

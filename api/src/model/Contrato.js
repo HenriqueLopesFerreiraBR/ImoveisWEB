@@ -23,9 +23,11 @@ const Contrato = Database.define('Contrato',{
     },
 },{timestamps:true})
 
-Contrato.sync({force:true})
+
 
 Contrato.belongsTo(Cliente, { foreignKey: 'idCliente' });
 Contrato.belongsTo(Imovel, { foreignKey: 'idImovel' });
 
+
+Contrato.sync({force:false})
 module.exports = Contrato
