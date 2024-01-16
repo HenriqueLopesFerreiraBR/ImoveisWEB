@@ -5,18 +5,22 @@ const dotenv = require("dotenv");
 const cors = require("cors");
 const connection = require("./src/database/connection");
 
+//importando os models para o o sequelize consiga criar as tabelas automaticamente
 const User = require('./src/model/User')
 const Cliente = require('./src/model/Cliente')
 const Imovel = require('./src/model/Imovel')
 const Contrato = require('./src/model/Contrato')
 
 
-//Routes
+//importando as rotas 
 const ClienteRouter = require('./src/router/ClienteRouter')
+const ImovelRouter = require('./src/router/imovelRouter')
+const ContratoRouter = require('./src/router/ContratoRouter')
+const UserRouter = require('./src/router/UserRouter')
 
 dotenv.config();
 
-const port = 3005;
+const port = process.env.PORT;
 
 try {
    connection.authenticate();
@@ -33,8 +37,15 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(cors());
 
-
+// Utilizando rotas
 app.use('/api/cliente',ClienteRouter)
+app.use('/api/imovel',ImovelRouter)
+app.use('/api/contrato',ContratoRouter)
+app.use('/api/usuario', UserRouter)
 
-app.get("/", (req, res) => res.send("Hello World!"));
+
+
+
+
+
 app.listen(port, () => console.log(`Example app listening on port ${port}!`));

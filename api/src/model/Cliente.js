@@ -12,13 +12,18 @@ const Cliente = database.define("Cliente",{
         type: Sequelize.STRING,
         allowNull:false
     },
+    email:{
+        type: Sequelize.STRING,
+        allowNull:false,
+        unique:true
+    },
     contato:{
         type:Sequelize.STRING,
         allowNull:false
     },
       historicoInteracoes:{
         type:Sequelize.STRING,
-        allowNull:false
+        
     }
 
 },{timestamps:true});

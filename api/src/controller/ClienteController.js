@@ -3,10 +3,23 @@ const ClienteModel = require("../model/Cliente");
 class ClienteController {
     async create(req, res) {
         try {
-            const { nome, contato, historicoInteracoes } = req.body;
+            const { nome, contato, email, historicoInteracoes } = req.body;
+
+            const clienteExist = await ClienteModel.findAll({
+                where: {
+                    email: email,
+                },
+            });
+
+            if (clienteExist) {
+                return res
+                    .status(501)
+                    .json("O email já foi cadastrado para outro cliente");
+            }
 
             const cliente = await ClienteModel.create({
                 nome: nome,
+                email: email,
                 contato: contato,
             });
             res.status(201).json({
@@ -33,7 +46,7 @@ class ClienteController {
         const clienteId = req.params.id;
 
         try {
-            const cliente = await Cliente.findByPk(clienteId);
+            const cliente = await ClienteModel.findByPk(clienteId);
 
             if (!cliente) {
                 res.status(404).send("Cliente não encontrado");
@@ -49,17 +62,17 @@ class ClienteController {
 
     async update(req, res) {
         const clienteId = req.params.id;
-        const { nome, email } = req.body;
+        const { nome, email, contato } = req.body;
 
         try {
-            const cliente = await Cliente.findByPk(clienteId);
+            const cliente = await ClienteModel.findByPk(clienteId);
 
             if (!cliente) {
                 res.status(404).send("Cliente não encontrado");
                 return;
             }
 
-            await cliente.update({ nome, email });
+            await cliente.update({ nome, email, contato });
             res.json(cliente);
         } catch (error) {
             console.error("Erro ao atualizar cliente por ID:", error);
@@ -71,7 +84,7 @@ class ClienteController {
         const clienteId = req.params.id;
 
         try {
-            const cliente = await Cliente.findByPk(clienteId);
+            const cliente = await ClienteModel.findByPk(clienteId);
 
             if (!cliente) {
                 res.status(404).send("Cliente não encontrado");
